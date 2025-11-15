@@ -2,9 +2,29 @@ import { useState, useMemo } from 'react';
 import { useApp } from '../hooks/useApp';
 import { Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { SportType } from '../types';
+
+const sportLabels: Record<SportType, string> = {
+  football: 'Футбол',
+  basketball: 'Баскетбол',
+  volleyball: 'Волейбол',
+  tennis: 'Теннис',
+  swimming: 'Плавание',
+  athletics: 'Легкая атлетика',
+  boxing: 'Бокс',
+  martial_arts: 'Боевые искусства',
+  yoga: 'Йога',
+  fitness: 'Фитнес',
+  cycling: 'Велоспорт',
+  skiing: 'Лыжи',
+  hockey: 'Хоккей',
+  gymnastics: 'Гимнастика',
+  triathlon: 'Триатлон',
+  other: 'Другое',
+};
 
 export default function TrainingCalendar() {
-  const { tasks, currentUser } = useApp();
+  const { tasks, currentUser, trainees, trainers } = useApp();
   const [currentDate, setCurrentDate] = useState(new Date());
 
   // Получаем тренировки для текущего пользователя
@@ -93,6 +113,16 @@ export default function TrainingCalendar() {
     }
   };
 
+  const getTraineeName = (traineeId: string) => {
+    const trainee = trainees.find(t => t.id === traineeId);
+    return trainee?.name || 'Неизвестно';
+  };
+
+  const getTrainerName = (trainerId: string) => {
+    const trainer = trainers.find(t => t.id === trainerId);
+    return trainer?.name || 'Неизвестно';
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
       <div className="flex items-center justify-between mb-6">
@@ -155,19 +185,32 @@ export default function TrainingCalendar() {
                     {day}
                   </div>
                   <div className="space-y-1">
-                    {dayTasks.slice(0, 2).map(task => (
-                      <Link
-                        key={task.id}
-                        to={currentUser?.role === 'trainer' 
-                          ? `/trainer/task/${task.id}`
-                          : `/trainee/task/${task.id}`
-                        }
-                        className={`block text-xs p-1 rounded truncate hover:opacity-80 ${getStatusColor(task.status)}`}
-                        title={task.title}
-                      >
-                        {task.title}
-                      </Link>
-                    ))}
+                    {dayTasks.slice(0, 2).map(task => {
+                      const sportLabel = task.sportType ? sportLabels[task.sportType] : '';
+                      const personName = currentUser?.role === 'trainer' 
+                        ? getTraineeName(task.traineeId)
+                        : getTrainerName(task.trainerId);
+                      
+                      return (
+                        <Link
+                          key={task.id}
+                          to={currentUser?.role === 'trainer' 
+                            ? `/trainer/task/${task.id}`
+                            : `/trainee/task/${task.id}`
+                          }
+                          className={`block text-xs p-1 rounded hover:opacity-80 ${getStatusColor(task.status)}`}
+                          title={`${task.title}${sportLabel ? ` - ${sportLabel}` : ''}${personName ? ` (${personName})` : ''}`}
+                        >
+                          <div className="truncate font-semibold">{task.title}</div>
+                          {sportLabel && (
+                            <div className="text-[10px] opacity-75 truncate">{sportLabel}</div>
+                          )}
+                          {personName && (
+                            <div className="text-[10px] opacity-75 truncate">{personName}</div>
+                          )}
+                        </Link>
+                      );
+                    })}
                     {dayTasks.length > 2 && (
                       <div className="text-xs text-gray-500 px-1">
                         +{dayTasks.length - 2} еще

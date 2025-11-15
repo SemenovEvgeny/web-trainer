@@ -58,9 +58,21 @@ export default function TaskDetails() {
       <div className="bg-white rounded-lg shadow-md p-8 space-y-6">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">{task.title}</h1>
-          <p className="text-gray-600">
-            Спортсмен: <span className="font-semibold">{trainee?.name || 'Неизвестно'}</span>
-          </p>
+          <div className="flex items-center gap-4 mb-2">
+            <p className="text-gray-600">
+              Спортсмен: <span className="font-semibold">{trainee?.name || 'Неизвестно'}</span>
+            </p>
+            {task.sportType && (
+              <span className="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm font-semibold">
+                {task.sportType === 'athletics' ? 'Легкая атлетика' :
+                 task.sportType === 'swimming' ? 'Плавание' :
+                 task.sportType === 'cycling' ? 'Велоспорт' :
+                 task.sportType === 'skiing' ? 'Лыжи' :
+                 task.sportType === 'triathlon' ? 'Триатлон' :
+                 task.sportType}
+              </span>
+            )}
+          </div>
           <p className="text-sm text-gray-500 mt-1">
             Создано: {new Date(task.createdAt).toLocaleString('ru-RU')}
           </p>
@@ -75,13 +87,28 @@ export default function TaskDetails() {
           <div className="border-t pt-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
               <Star className="w-5 h-5 text-indigo-600" />
-              Решение спортсмена
+              Отчет спортсмена
             </h2>
             <div className="bg-gray-50 rounded-lg p-4 mb-4">
               <p className="text-gray-700 whitespace-pre-wrap">{task.solution.content}</p>
-              <p className="text-sm text-gray-500 mt-3">
-                Отправлено: {new Date(task.solution.submittedAt).toLocaleString('ru-RU')}
-              </p>
+              <div className="mt-3 space-y-2">
+                {task.solution.distance !== undefined && (
+                  <p className="text-sm text-gray-700">
+                    <span className="font-semibold">Дистанция:</span> {task.solution.distance} м
+                    {task.solution.distance >= 1000 && (
+                      <span className="text-gray-500"> ({(task.solution.distance / 1000).toFixed(2)} км)</span>
+                    )}
+                  </p>
+                )}
+                {task.solution.minutes !== undefined && (
+                  <p className="text-sm text-gray-700">
+                    <span className="font-semibold">Время:</span> {task.solution.minutes} минут
+                  </p>
+                )}
+                <p className="text-sm text-gray-500">
+                  Отправлено: {new Date(task.solution.submittedAt).toLocaleString('ru-RU')}
+                </p>
+              </div>
             </div>
 
             {task.status === 'submitted' ? (

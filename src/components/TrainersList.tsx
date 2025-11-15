@@ -19,6 +19,7 @@ const categoryLabels: Record<TrainerCategory, string> = {
   skiing: 'Лыжи',
   hockey: 'Хоккей',
   gymnastics: 'Гимнастика',
+  triathlon: 'Триатлон',
   other: 'Другое',
 };
 
@@ -37,6 +38,7 @@ const categoryColors: Record<TrainerCategory, string> = {
   skiing: 'bg-blue-200 text-blue-900',
   hockey: 'bg-gray-100 text-gray-800',
   gymnastics: 'bg-purple-200 text-purple-900',
+  triathlon: 'bg-teal-100 text-teal-800',
   other: 'bg-gray-100 text-gray-800',
 };
 

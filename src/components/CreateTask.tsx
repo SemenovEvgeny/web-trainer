@@ -2,6 +2,26 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../hooks/useApp';
 import { Save } from 'lucide-react';
+import { SportType } from '../types';
+
+const sportLabels: Record<SportType, string> = {
+  football: 'Футбол',
+  basketball: 'Баскетбол',
+  volleyball: 'Волейбол',
+  tennis: 'Теннис',
+  swimming: 'Плавание',
+  athletics: 'Легкая атлетика',
+  boxing: 'Бокс',
+  martial_arts: 'Боевые искусства',
+  yoga: 'Йога',
+  fitness: 'Фитнес',
+  cycling: 'Велоспорт',
+  skiing: 'Лыжи',
+  hockey: 'Хоккей',
+  gymnastics: 'Гимнастика',
+  triathlon: 'Триатлон',
+  other: 'Другое',
+};
 
 export default function CreateTask() {
   const navigate = useNavigate();
@@ -9,12 +29,13 @@ export default function CreateTask() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [selectedTrainee, setSelectedTrainee] = useState('');
+  const [sportType, setSportType] = useState<SportType>('football');
   const [dueDate, setDueDate] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!title.trim() || !description.trim() || !selectedTrainee) {
+    if (!title.trim() || !description.trim() || !selectedTrainee || !sportType) {
       alert('Пожалуйста, заполните все обязательные поля');
       return;
     }
@@ -44,6 +65,7 @@ export default function CreateTask() {
       trainerId: currentUser?.id || '',
       traineeId: selectedTrainee,
       status: 'pending',
+      sportType: sportType,
       dueDate: dueDate || undefined,
     });
 
@@ -90,6 +112,24 @@ export default function CreateTask() {
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none"
             required
           />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Вид спорта <span className="text-red-500">*</span>
+          </label>
+          <select
+            value={sportType}
+            onChange={(e) => setSportType(e.target.value as SportType)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none"
+            required
+          >
+            {Object.entries(sportLabels).map(([key, label]) => (
+              <option key={key} value={key}>
+                {label}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div>

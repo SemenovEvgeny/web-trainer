@@ -12,6 +12,8 @@ export interface User {
   avatar?: string;
 }
 
+export type SportType = TrainerCategory;
+
 export interface Task {
   id: string;
   title: string;
@@ -21,6 +23,7 @@ export interface Task {
   status: TaskStatus;
   createdAt: string;
   dueDate?: string;
+  sportType: SportType; // Вид спорта (обязательное поле)
   solution?: Solution;
   qualityRating?: QualityRating;
   feedback?: string;
@@ -32,6 +35,8 @@ export interface Solution {
   content: string;
   submittedAt: string;
   attachments?: string[];
+  distance?: number; // Дистанция в метрах (для бег, плавание, триатлон, велосипед, лыжи)
+  minutes?: number; // Количество минут (для других видов спорта)
 }
 
 export interface Trainee {
@@ -58,6 +63,7 @@ export type TrainerCategory =
   | 'skiing'
   | 'hockey'
   | 'gymnastics'
+  | 'triathlon'
   | 'other';
 
 export interface Trainer {

@@ -14,7 +14,7 @@ interface AppState {
   addTrainerReview: (trainerId: string, rating: number, comment: string) => void;
   createTask: (task: Omit<Task, 'id' | 'createdAt'>) => void;
   updateTask: (taskId: string, updates: Partial<Task>) => void;
-  submitSolution: (taskId: string, solution: string) => void;
+  submitSolution: (taskId: string, solution: string, distance?: number, minutes?: number) => void;
   reviewSolution: (taskId: string, rating: QualityRating, feedback: string) => void;
 }
 
@@ -206,34 +206,38 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [tasks, setTasks] = useState<Task[]>([
     {
       id: '1',
-      title: 'Изучение основ React',
-      description: 'Изучите основные концепции React: компоненты, пропсы, состояние. Создайте простое приложение-счетчик.',
+      title: 'Беговая тренировка 5 км',
+      description: 'Пробегите дистанцию 5 км в комфортном темпе. Следите за дыханием и техникой бега.',
       trainerId: 'trainer-1',
       traineeId: '1',
       status: 'reviewed',
+      sportType: 'athletics',
       createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
       solution: {
         id: 'sol-1',
         taskId: '1',
-        content: 'Создал компонент Counter с использованием useState. Реализовал инкремент и декремент.',
+        content: 'Пробежал 5 км за 28 минут. Чувствовал себя хорошо, темп был равномерным.',
         submittedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+        distance: 5000,
       },
       qualityRating: 'good',
-      feedback: 'Хорошая работа! Учтите использование useCallback для оптимизации.',
+      feedback: 'Хорошая работа! Продолжайте в том же духе. Обратите внимание на технику бега.',
     },
     {
       id: '2',
-      title: 'Работа с API',
-      description: 'Создайте компонент для загрузки и отображения данных из API. Используйте fetch или axios.',
-      trainerId: 'trainer-1',
+      title: 'Плавание 1000 метров',
+      description: 'Проплывите 1000 метров вольным стилем. Разделите на подходы по 200 метров.',
+      trainerId: 'trainer-2',
       traineeId: '2',
       status: 'submitted',
+      sportType: 'swimming',
       createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
       solution: {
         id: 'sol-2',
         taskId: '2',
-        content: 'Реализовал компонент с использованием fetch. Добавил обработку ошибок и состояние загрузки.',
+        content: 'Проплыл 1000 метров за 5 подходов по 200 метров. Отдых между подходами 30 секунд.',
         submittedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+        distance: 1000,
       },
     },
   ]);
@@ -297,12 +301,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
     ));
   };
 
-  const submitSolution = (taskId: string, solution: string) => {
+  const submitSolution = (taskId: string, solution: string, distance?: number, minutes?: number) => {
     const solutionObj = {
       id: `sol-${Date.now()}`,
       taskId,
       content: solution,
       submittedAt: new Date().toISOString(),
+      distance: distance,
+      minutes: minutes,
     };
     updateTask(taskId, {
       solution: solutionObj,

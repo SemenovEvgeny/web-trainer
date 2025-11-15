@@ -256,7 +256,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const removeTrainee = (traineeId: string) => {
     setTrainees(trainees.filter(t => t.id !== traineeId));
-    // Также удаляем все задания этого спортсмена
+    // Также удаляем все тренировки этого спортсмена
     setTasks(tasks.filter(t => t.traineeId !== traineeId));
   };
 

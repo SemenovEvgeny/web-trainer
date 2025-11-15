@@ -47,8 +47,8 @@ export default function MyTasks() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Мои задания</h1>
-        <p className="text-gray-600">Просмотр и выполнение заданий</p>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Мои тренировки</h1>
+        <p className="text-gray-600">Просмотр и выполнение тренировок</p>
       </div>
 
       <div className="space-y-4">
@@ -100,7 +100,7 @@ export default function MyTasks() {
       {myTasks.length === 0 && (
         <div className="text-center py-12 bg-white rounded-lg">
           <FileText className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <p className="text-gray-600">У вас пока нет заданий</p>
+          <p className="text-gray-600">У вас пока нет тренировок</p>
         </div>
       )}
     </div>

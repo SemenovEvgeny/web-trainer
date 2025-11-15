@@ -1,9 +1,11 @@
 import { Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useApp } from '../store';
-import { LogOut, FileText, Users } from 'lucide-react';
+import { LogOut, FileText, Users, Calendar, User } from 'lucide-react';
 import MyTasks from '../components/MyTasks';
 import TaskView from '../components/TaskView';
 import TrainersList from '../components/TrainersList';
+import TrainingCalendar from '../components/TrainingCalendar';
+import TraineeProfile from './TraineeProfile';
 
 export default function TraineeDashboard() {
   const { currentUser, setCurrentUser } = useApp();
@@ -32,7 +34,7 @@ export default function TraineeDashboard() {
                 }`}
               >
                 <FileText className="w-5 h-5 mr-2" />
-                Мои задания
+                Мои тренировки
               </Link>
               <Link
                 to="/trainee/trainers"
@@ -44,6 +46,28 @@ export default function TraineeDashboard() {
               >
                 <Users className="w-5 h-5 mr-2" />
                 Тренеры
+              </Link>
+              <Link
+                to="/trainee/calendar"
+                className={`flex items-center px-4 border-b-2 ${
+                  isActive('/trainee/calendar')
+                    ? 'border-indigo-500 text-indigo-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                <Calendar className="w-5 h-5 mr-2" />
+                Календарь
+              </Link>
+              <Link
+                to="/trainee/profile"
+                className={`flex items-center px-4 border-b-2 ${
+                  isActive('/trainee/profile')
+                    ? 'border-indigo-500 text-indigo-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                <User className="w-5 h-5 mr-2" />
+                Профиль
               </Link>
             </div>
             <div className="flex items-center space-x-4">
@@ -64,6 +88,8 @@ export default function TraineeDashboard() {
           <Route path="/" element={<MyTasks />} />
           <Route path="/task/:taskId" element={<TaskView />} />
           <Route path="/trainers" element={<TrainersList />} />
+          <Route path="/calendar" element={<TrainingCalendar />} />
+          <Route path="/profile" element={<TraineeProfile />} />
         </Routes>
       </main>
     </div>

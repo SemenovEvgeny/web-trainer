@@ -55,7 +55,7 @@ export default function TraineesList() {
   };
 
   const handleDeleteClick = (traineeId: string, traineeName: string) => {
-    if (window.confirm(`Вы уверены, что хотите удалить спортсмена "${traineeName}"?\n\nЭто действие также удалит все задания этого спортсмена.`)) {
+    if (window.confirm(`Вы уверены, что хотите удалить спортсмена "${traineeName}"?\n\nЭто действие также удалит все тренировки этого спортсмена.`)) {
       removeTrainee(traineeId);
     }
   };
@@ -65,7 +65,7 @@ export default function TraineesList() {
       <div className="mb-8 flex items-center justify-between">
         <div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Мои спортсмены</h1>
-        <p className="text-gray-600">Управление спортсменами и их заданиями</p>
+        <p className="text-gray-600">Управление спортсменами и их тренировками</p>
         </div>
         <div className="flex gap-3">
           <button
@@ -112,7 +112,7 @@ export default function TraineesList() {
 
               <div className="space-y-3 mb-4">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Всего заданий:</span>
+                  <span className="text-gray-600">Всего тренировок:</span>
                   <span className="font-semibold">{stats.totalTasks}</span>
                 </div>
                 <div className="flex justify-between text-sm">
@@ -143,7 +143,7 @@ export default function TraineesList() {
                 to={`/trainer/tasks?trainee=${trainee.id}`}
                 className="block w-full text-center bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition-colors text-sm font-medium"
               >
-                Просмотреть задания
+                Просмотреть тренировки
               </Link>
             </div>
           );

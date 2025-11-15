@@ -68,8 +68,8 @@ export default function TasksList() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Задания</h1>
-        <p className="text-gray-600">Управление всеми заданиями</p>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Тренировки</h1>
+        <p className="text-gray-600">Управление всеми тренировками</p>
       </div>
 
       <div className="mb-6 flex gap-2 flex-wrap">
@@ -149,7 +149,7 @@ export default function TasksList() {
       {filteredTasks.length === 0 && (
         <div className="text-center py-12 bg-white rounded-lg">
           <FileText className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <p className="text-gray-600">Задания не найдены</p>
+          <p className="text-gray-600">Тренировки не найдены</p>
         </div>
       )}
     </div>

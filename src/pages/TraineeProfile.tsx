@@ -16,21 +16,27 @@ const ratingLabels: Record<QualityRating, string> = {
   needs_improvement: 'Требует улучшения',
 };
 
-export default function TrainerProfile() {
-  const { currentUser, trainees, tasks } = useApp();
+export default function TraineeProfile() {
+  const { currentUser, tasks, trainers } = useApp();
 
-  if (!currentUser) {
-    return null;
+  if (!currentUser || currentUser.role !== 'trainee') {
+    return (
+      <div className="text-center py-12 bg-white rounded-lg shadow-md">
+        <h2 className="text-2xl font-bold text-red-600 mb-4">Доступ запрещен</h2>
+        <p className="text-gray-600">Эта страница доступна только для спортсменов.</p>
+      </div>
+    );
   }
 
   // Статистика по тренировкам
-  const totalTasks = tasks.length;
-  const pendingTasks = tasks.filter(t => t.status === 'pending' || t.status === 'in_progress').length;
-  const submittedTasks = tasks.filter(t => t.status === 'submitted').length;
-  const reviewedTasks = tasks.filter(t => t.status === 'reviewed').length;
+  const myTasks = tasks.filter(t => t.traineeId === currentUser.id);
+  const totalTasks = myTasks.length;
+  const pendingTasks = myTasks.filter(t => t.status === 'pending' || t.status === 'in_progress').length;
+  const submittedTasks = myTasks.filter(t => t.status === 'submitted').length;
+  const reviewedTasks = myTasks.filter(t => t.status === 'reviewed').length;
 
   // Статистика по оценкам
-  const reviewedTasksWithRating = tasks.filter(t => t.qualityRating);
+  const reviewedTasksWithRating = myTasks.filter(t => t.qualityRating);
   const ratingDistribution = reviewedTasksWithRating.reduce((acc, task) => {
     const rating = task.qualityRating!;
     acc[rating] = (acc[rating] || 0) + 1;
@@ -51,16 +57,15 @@ export default function TrainerProfile() {
       })()
     : undefined;
 
-  // Статистика по спортсменам
-  const totalTrainees = trainees.length;
-  const traineesWithTasks = trainees.filter(t => {
-    return tasks.some(task => task.traineeId === t.id);
-  }).length;
+  // Статистика по тренерам
+  const trainerIds = new Set(myTasks.map(t => t.trainerId));
+  const myTrainers = trainers.filter(t => trainerIds.has(t.id));
+  const totalTrainers = myTrainers.length;
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Профиль тренера</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Профиль спортсмена</h1>
         <p className="text-gray-600">Информация о вашем профиле и статистика</p>
       </div>
 
@@ -77,7 +82,7 @@ export default function TrainerProfile() {
               <span>{currentUser.email}</span>
             </div>
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 text-sm font-semibold">
-              Тренер
+              Супергерой
             </div>
           </div>
         </div>
@@ -85,17 +90,17 @@ export default function TrainerProfile() {
 
       {/* Статистика */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {/* Спортсмены */}
+        {/* Тренеры */}
         <div className="bg-white rounded-lg shadow-md p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="p-3 bg-blue-100 rounded-lg">
               <Users className="w-6 h-6 text-blue-600" />
             </div>
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-1">{totalTrainees}</h3>
-          <p className="text-sm text-gray-600">Спортсменов</p>
+          <h3 className="text-2xl font-bold text-gray-900 mb-1">{totalTrainers}</h3>
+          <p className="text-sm text-gray-600">Тренеров</p>
           <p className="text-xs text-gray-500 mt-2">
-            {traineesWithTasks} с тренировками
+            {myTrainers.length} активных
           </p>
         </div>
 
@@ -135,7 +140,7 @@ export default function TrainerProfile() {
 
       {/* Детальная статистика */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Статистика по заданиям */}
+        {/* Статистика по тренировкам */}
         <div className="bg-white rounded-lg shadow-md p-6">
           <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
             <FileText className="w-5 h-5 text-indigo-600" />
@@ -151,7 +156,7 @@ export default function TrainerProfile() {
               <span className="font-semibold text-blue-600">{pendingTasks}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-gray-600">Ожидают проверки:</span>
+              <span className="text-gray-600">На проверке:</span>
               <span className="font-semibold text-orange-600">{submittedTasks}</span>
             </div>
             <div className="flex justify-between items-center">
@@ -160,7 +165,12 @@ export default function TrainerProfile() {
             </div>
             {totalTasks > 0 && (
               <div className="pt-4 border-t">
-                <div className="text-sm text-gray-600 mb-2">Прогресс проверки:</div>
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-gray-600">Прогресс:</span>
+                  <span className="text-sm font-semibold text-gray-900">
+                    {Math.round((reviewedTasks / totalTasks) * 100)}%
+                  </span>
+                </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
                   <div
                     className="bg-green-600 h-2 rounded-full transition-all"
@@ -175,45 +185,35 @@ export default function TrainerProfile() {
           </div>
         </div>
 
-        {/* Статистика по оценкам */}
+        {/* Средняя оценка */}
         <div className="bg-white rounded-lg shadow-md p-6">
           <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
             <Award className="w-5 h-5 text-indigo-600" />
-            Статистика по оценкам
+            Средняя оценка
           </h3>
-          {reviewedTasksWithRating.length > 0 ? (
+          {averageRating ? (
             <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600">Средняя оценка:</span>
-                {averageRating && (
-                  <span
-                    className={`px-3 py-1 rounded text-sm font-semibold ${ratingColors[averageRating]}`}
-                  >
-                    {ratingLabels[averageRating]}
-                  </span>
-                )}
+              <div className="flex items-center gap-3">
+                <span
+                  className={`px-4 py-2 rounded-lg text-lg font-bold ${ratingColors[averageRating]}`}
+                >
+                  {ratingLabels[averageRating]}
+                </span>
               </div>
-              <div className="pt-4 border-t space-y-3">
-                <div className="text-sm font-medium text-gray-700 mb-3">Распределение оценок:</div>
-                {Object.entries(ratingLabels).map(([key, label]) => {
-                  const count = ratingDistribution[key as QualityRating] || 0;
-                  const percentage = reviewedTasksWithRating.length > 0
-                    ? (count / reviewedTasksWithRating.length) * 100
-                    : 0;
+              <div className="space-y-2">
+                {(['excellent', 'good', 'satisfactory', 'needs_improvement'] as QualityRating[]).map(rating => {
+                  const count = ratingDistribution[rating] || 0;
+                  const total = reviewedTasksWithRating.length;
                   return (
-                    <div key={key} className="space-y-1">
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">{label}:</span>
-                        <span className="font-semibold text-gray-900">
-                          {count} ({Math.round(percentage)}%)
-                        </span>
-                      </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div key={rating} className="flex items-center gap-2">
+                      <span className="text-sm text-gray-700 w-32">{ratingLabels[rating]}:</span>
+                      <div className="flex-1 bg-gray-200 rounded-full h-2">
                         <div
-                          className={`h-2 rounded-full transition-all ${ratingColors[key as QualityRating].split(' ')[0]}`}
-                          style={{ width: `${percentage}%` }}
+                          className={`h-2 rounded-full ${ratingColors[rating]}`}
+                          style={{ width: `${total > 0 ? (count / total) * 100 : 0}%` }}
                         ></div>
                       </div>
+                      <span className="text-sm text-gray-700 w-12 text-right">{count}</span>
                     </div>
                   );
                 })}
@@ -228,42 +228,39 @@ export default function TrainerProfile() {
         </div>
       </div>
 
-      {/* Список спортсменов */}
+      {/* Список тренеров */}
       <div className="bg-white rounded-lg shadow-md p-6">
         <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
           <Users className="w-5 h-5 text-indigo-600" />
-          Мои спортсмены ({totalTrainees})
+          Мои тренеры ({totalTrainers})
         </h3>
-        {trainees.length > 0 ? (
+        {myTrainers.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {trainees.map((trainee) => {
-              const traineeTasks = tasks.filter(t => t.traineeId === trainee.id);
-              const traineeReviewedTasks = traineeTasks.filter(t => t.qualityRating);
+            {myTrainers.map((trainer) => {
+              const trainerTasks = myTasks.filter(t => t.trainerId === trainer.id);
+              const trainerReviewedTasks = trainerTasks.filter(t => t.status === 'reviewed');
               return (
-                <div
-                  key={trainee.id}
-                  className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
-                >
-                  <div className="flex items-center mb-3">
-                    <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center mr-3">
-                      <User className="w-5 h-5 text-indigo-600" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900">{trainee.name}</h4>
-                      <p className="text-xs text-gray-500">{trainee.email}</p>
+                <div key={trainer.id} className="bg-gray-50 rounded-lg p-4">
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center">
+                        <User className="w-5 h-5 text-indigo-600" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-900">{trainer.name}</p>
+                        <p className="text-xs text-gray-500">{trainer.email}</p>
+                      </div>
                     </div>
                   </div>
                   <div className="space-y-1 text-sm">
                     <div className="flex justify-between">
                       <span className="text-gray-600">Тренировок:</span>
-                      <span className="font-semibold">{traineeTasks.length}</span>
+                      <span className="font-semibold">{trainerTasks.length}</span>
                     </div>
-                    {traineeReviewedTasks.length > 0 && (
+                    {trainerReviewedTasks.length > 0 && (
                       <div className="flex justify-between">
                         <span className="text-gray-600">Проверено:</span>
-                        <span className="font-semibold text-green-600">
-                          {traineeReviewedTasks.length}
-                        </span>
+                        <span className="font-semibold text-green-600">{trainerReviewedTasks.length}</span>
                       </div>
                     )}
                   </div>
@@ -274,7 +271,7 @@ export default function TrainerProfile() {
         ) : (
           <div className="text-center py-8 text-gray-500">
             <Users className="w-12 h-12 mx-auto mb-2 text-gray-400" />
-            <p>Пока нет спортсменов</p>
+            <p>Пока нет тренеров</p>
           </div>
         )}
       </div>

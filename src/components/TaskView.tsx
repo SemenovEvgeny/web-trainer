@@ -28,7 +28,7 @@ export default function TaskView() {
   if (!task) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-600">Задание не найдено</p>
+        <p className="text-gray-600">Тренировка не найдена</p>
         <button
           onClick={() => navigate('/trainee')}
           className="mt-4 text-indigo-600 hover:text-indigo-700"
@@ -60,7 +60,7 @@ export default function TaskView() {
         className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6"
       >
         <ArrowLeft className="w-5 h-5" />
-        Назад к заданиям
+        Назад к тренировкам
       </button>
 
       <div className="bg-white rounded-lg shadow-md p-8 space-y-6">
@@ -77,7 +77,7 @@ export default function TaskView() {
         </div>
 
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-2">Описание задания</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-2">Описание тренировки</h2>
           <p className="text-gray-700 whitespace-pre-wrap">{task.description}</p>
         </div>
 
@@ -87,7 +87,7 @@ export default function TaskView() {
             <textarea
               value={solution}
               onChange={(e) => setSolution(e.target.value)}
-              placeholder="Опишите ваше решение задания..."
+              placeholder="Опишите ваше решение тренировки..."
               rows={8}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none resize-none"
             />

@@ -1,11 +1,12 @@
 import { Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useApp } from '../store';
-import { LogOut, Users, FileText, Plus, User } from 'lucide-react';
+import { LogOut, Users, FileText, Plus, User, Calendar } from 'lucide-react';
 import TraineesList from '../components/TraineesList';
 import TasksList from '../components/TasksList';
 import CreateTask from '../components/CreateTask';
 import TaskDetails from '../components/TaskDetails';
 import TrainerProfile from './TrainerProfile';
+import TrainingCalendar from '../components/TrainingCalendar';
 
 export default function TrainerDashboard() {
   const { currentUser, setCurrentUser } = useApp();
@@ -45,7 +46,18 @@ export default function TrainerDashboard() {
                 }`}
               >
                 <FileText className="w-5 h-5 mr-2" />
-                Задания
+                Тренировки
+              </Link>
+              <Link
+                to="/trainer/calendar"
+                className={`flex items-center px-4 border-b-2 ${
+                  isActive('/trainer/calendar')
+                    ? 'border-indigo-500 text-indigo-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                <Calendar className="w-5 h-5 mr-2" />
+                Календарь
               </Link>
               <Link
                 to="/trainer/create-task"
@@ -56,7 +68,7 @@ export default function TrainerDashboard() {
                 }`}
               >
                 <Plus className="w-5 h-5 mr-2" />
-                Создать задание
+                Создать тренировку
               </Link>
               <Link
                 to="/trainer/profile"
@@ -87,6 +99,7 @@ export default function TrainerDashboard() {
         <Routes>
           <Route path="/" element={<TraineesList />} />
           <Route path="/tasks" element={<TasksList />} />
+          <Route path="/calendar" element={<TrainingCalendar />} />
           <Route path="/create-task" element={<CreateTask />} />
           <Route path="/task/:taskId" element={<TaskDetails />} />
           <Route path="/profile" element={<TrainerProfile />} />

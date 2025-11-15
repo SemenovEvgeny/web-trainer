@@ -5,7 +5,7 @@ import { Save } from 'lucide-react';
 
 export default function CreateTask() {
   const navigate = useNavigate();
-  const { trainees, createTask, currentUser } = useApp();
+  const { trainees, createTask, currentUser, tasks } = useApp();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [selectedTrainee, setSelectedTrainee] = useState('');
@@ -19,6 +19,25 @@ export default function CreateTask() {
       return;
     }
 
+    // Проверка на дубликат тренировки в один день
+    if (dueDate) {
+      const existingTask = tasks.find(task => {
+        if (task.traineeId === selectedTrainee && task.dueDate) {
+          const existingDate = new Date(task.dueDate).toDateString();
+          const newDate = new Date(dueDate).toDateString();
+          return existingDate === newDate;
+        }
+        return false;
+      });
+
+      if (existingTask) {
+        const confirmMessage = `В этот день (${new Date(dueDate).toLocaleDateString('ru-RU')}) у спортсмена уже запланирована тренировка "${existingTask.title}".\n\nВы уверены, что хотите создать еще одну тренировку?`;
+        if (!window.confirm(confirmMessage)) {
+          return;
+        }
+      }
+    }
+
     createTask({
       title: title.trim(),
       description: description.trim(),
@@ -28,15 +47,15 @@ export default function CreateTask() {
       dueDate: dueDate || undefined,
     });
 
-    alert('Задание успешно создано!');
+    alert('Тренировка успешно создана!');
     navigate('/trainer/tasks');
   };
 
   return (
     <div className="max-w-3xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Создать задание</h1>
-        <p className="text-gray-600">Создайте новое задание для спортсмена</p>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Создать тренировку</h1>
+        <p className="text-gray-600">Создайте новую тренировку для спортсмена</p>
       </div>
 
       <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6 space-y-6">
@@ -61,13 +80,13 @@ export default function CreateTask() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Название задания <span className="text-red-500">*</span>
+            Название тренировки <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Введите название задания"
+            placeholder="Введите название тренировки"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none"
             required
           />
@@ -75,12 +94,12 @@ export default function CreateTask() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Описание задания <span className="text-red-500">*</span>
+            Описание тренировки <span className="text-red-500">*</span>
           </label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="Опишите задание подробно..."
+            placeholder="Опишите тренировку подробно..."
             rows={6}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none resize-none"
             required
@@ -105,7 +124,7 @@ export default function CreateTask() {
             className="flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors shadow-lg hover:shadow-xl"
           >
             <Save className="w-5 h-5" />
-            Создать задание
+            Создать тренировку
           </button>
           <button
             type="button"

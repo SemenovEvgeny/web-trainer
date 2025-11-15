@@ -44,15 +44,20 @@ export interface Trainee {
 }
 
 export type TrainerCategory = 
-  | 'programming'
-  | 'design'
-  | 'marketing'
-  | 'business'
-  | 'languages'
+  | 'football'
+  | 'basketball'
+  | 'volleyball'
+  | 'tennis'
+  | 'swimming'
+  | 'athletics'
+  | 'boxing'
+  | 'martial_arts'
+  | 'yoga'
   | 'fitness'
-  | 'music'
-  | 'photography'
-  | 'cooking'
+  | 'cycling'
+  | 'skiing'
+  | 'hockey'
+  | 'gymnastics'
   | 'other';
 
 export interface Trainer {

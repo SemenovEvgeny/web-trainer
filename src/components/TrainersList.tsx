@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { useApp } from '../store';
+import { useApp } from '../hooks/useApp';
 import { User, Star, Users, Award, Filter, X, MessageSquare, ChevronDown, ChevronUp } from 'lucide-react';
 import { TrainerCategory } from '../types';
 import AddTrainerReview from './AddTrainerReview';

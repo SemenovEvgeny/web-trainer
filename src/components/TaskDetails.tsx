@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useApp } from '../store';
+import { useApp } from '../hooks/useApp';
 import { ArrowLeft, Star } from 'lucide-react';
 import { QualityRating } from '../types';
 

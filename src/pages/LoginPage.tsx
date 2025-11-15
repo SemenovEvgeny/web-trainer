@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useApp } from '../store';
+import { useApp } from '../hooks/useApp';
 import { User } from '../types';
 import { UserCheck } from 'lucide-react';
 

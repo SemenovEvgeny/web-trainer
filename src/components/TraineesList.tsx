@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useApp } from '../store';
+import { useApp } from '../hooks/useApp';
 import { User, Plus, QrCode, Trash2 } from 'lucide-react';
 import { QualityRating } from '../types';
 import AddTrainee from './AddTrainee';

@@ -1,5 +1,5 @@
 import { Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
-import { useApp } from '../store';
+import { useApp } from '../hooks/useApp';
 import { LogOut, Users, FileText, Plus, Calendar } from 'lucide-react';
 import TraineesList from '../components/TraineesList';
 import TasksList from '../components/TasksList';

@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { useApp } from '../store';
+import { useApp } from '../hooks/useApp';
 import { Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 

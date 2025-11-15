@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
-import { useApp } from '../store';
+import { useApp } from '../hooks/useApp';
 import { X, QrCode, Download } from 'lucide-react';
 
 interface TraineeQRCodeProps {

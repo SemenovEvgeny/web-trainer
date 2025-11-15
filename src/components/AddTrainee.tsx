@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useApp } from '../store';
+import { useApp } from '../hooks/useApp';
 import { X, UserPlus } from 'lucide-react';
 
 interface AddTraineeProps {

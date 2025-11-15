@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useApp } from '../store';
+import { useApp } from '../hooks/useApp';
 import { FileText, Clock, CheckCircle, AlertCircle, Star } from 'lucide-react';
 import { QualityRating } from '../types';
 

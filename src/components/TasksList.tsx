@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { useApp } from '../store';
+import { useApp } from '../hooks/useApp';
 import { FileText, Clock, CheckCircle, AlertCircle } from 'lucide-react';
 import { TaskStatus, QualityRating } from '../types';
 

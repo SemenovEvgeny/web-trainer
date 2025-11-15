@@ -1,4 +1,4 @@
-import { useApp } from '../store';
+import { useApp } from '../hooks/useApp';
 import { User, Mail, Users, FileText, CheckCircle, Clock, Award } from 'lucide-react';
 import { QualityRating } from '../types';
 

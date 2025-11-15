@@ -34,6 +34,15 @@ jobs:
         ls -la dist/
         du -sh dist/
     
+    - name: 📄 Copy .htaccess to dist
+      run: |
+        if [ -f .htaccess ]; then
+          cp .htaccess dist/.htaccess
+          echo "✅ .htaccess copied to dist"
+        else
+          echo "⚠️ .htaccess not found, skipping"
+        fi
+    
     - name: 📤 Deploy to reg.ru via FTP
       uses: SamKirkland/FTP-Deploy-Action@4.3.0
       with:
@@ -47,18 +56,6 @@ jobs:
           **/.git*
           **/.git*/**
           **/node_modules/**
-    
-    - name: 📄 Upload .htaccess
-      uses: SamKirkland/FTP-Deploy-Action@4.3.0
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./
-        server-dir: ${{ secrets.FTP_PATH || '/public_html' }}
-        include: |
-          **/.htaccess
-      continue-on-error: true
     
     - name: ✅ Deployment successful
       run: |

@@ -20,7 +20,7 @@ export default function AddTrainerReview({
   const [hoveredRating, setHoveredRating] = useState(0);
   const [comment, setComment] = useState('');
 
-  // Проверяем, оставлял ли уже этот подопечный отзыв
+  // Проверяем, оставлял ли уже этот спортсмен отзыв
   const hasExistingReview = trainerReviews.some(
     r => r.trainerId === trainerId && r.traineeId === currentUser?.id
   );

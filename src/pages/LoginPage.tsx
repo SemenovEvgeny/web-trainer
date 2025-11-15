@@ -78,7 +78,7 @@ export default function LoginPage() {
                     : 'border-gray-200 hover:border-gray-300 text-gray-700'
                 }`}
               >
-                Подопечный
+                Супергерой
               </button>
             </div>
           </div>

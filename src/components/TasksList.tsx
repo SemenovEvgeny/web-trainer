@@ -134,7 +134,7 @@ export default function TasksList() {
                   </div>
                   <p className="text-gray-600 mb-3 line-clamp-2">{task.description}</p>
                   <div className="flex items-center gap-4 text-sm text-gray-500">
-                    <span>Подопечный: {getTraineeName(task.traineeId)}</span>
+                    <span>Спортсмен: {getTraineeName(task.traineeId)}</span>
                     <span>
                       Создано: {new Date(task.createdAt).toLocaleDateString('ru-RU')}
                     </span>

@@ -21,16 +21,16 @@ export default function JoinPage() {
         return;
       }
 
-      // Находим подопечного в списке доступных
+      // Находим спортсмена в списке доступных
       const trainee = allAvailableTrainees.find(t => t.id === traineeId);
       
       if (!trainee) {
         setStatus('error');
-        setMessage('Подопечный не найден в системе.');
+        setMessage('Спортсмен не найден в системе.');
         return;
       }
 
-      // Если пользователь не авторизован, создаем временного пользователя-подопечного
+      // Если пользователь не авторизован, создаем временного пользователя-спортсмена
       if (!currentUser || currentUser.role !== 'trainee') {
         const tempUser = {
           id: traineeId,
@@ -41,7 +41,7 @@ export default function JoinPage() {
         setCurrentUser(tempUser);
       }
 
-      // Добавляем подопечного к тренеру
+      // Добавляем спортсмена к тренеру
       try {
         addTrainee(traineeId, trainerId);
         setStatus('success');

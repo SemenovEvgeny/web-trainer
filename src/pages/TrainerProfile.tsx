@@ -51,7 +51,7 @@ export default function TrainerProfile() {
       })()
     : undefined;
 
-  // Статистика по подопечным
+  // Статистика по спортсменам
   const totalTrainees = trainees.length;
   const traineesWithTasks = trainees.filter(t => {
     return tasks.some(task => task.traineeId === t.id);
@@ -85,7 +85,7 @@ export default function TrainerProfile() {
 
       {/* Статистика */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {/* Подопечные */}
+        {/* Спортсмены */}
         <div className="bg-white rounded-lg shadow-md p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="p-3 bg-blue-100 rounded-lg">
@@ -93,7 +93,7 @@ export default function TrainerProfile() {
             </div>
           </div>
           <h3 className="text-2xl font-bold text-gray-900 mb-1">{totalTrainees}</h3>
-          <p className="text-sm text-gray-600">Подопечных</p>
+          <p className="text-sm text-gray-600">Спортсменов</p>
           <p className="text-xs text-gray-500 mt-2">
             {traineesWithTasks} с заданиями
           </p>
@@ -228,11 +228,11 @@ export default function TrainerProfile() {
         </div>
       </div>
 
-      {/* Список подопечных */}
+      {/* Список спортсменов */}
       <div className="bg-white rounded-lg shadow-md p-6">
         <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
           <Users className="w-5 h-5 text-indigo-600" />
-          Мои подопечные ({totalTrainees})
+          Мои спортсмены ({totalTrainees})
         </h3>
         {trainees.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -274,7 +274,7 @@ export default function TrainerProfile() {
         ) : (
           <div className="text-center py-8 text-gray-500">
             <Users className="w-12 h-12 mx-auto mb-2 text-gray-400" />
-            <p>Пока нет подопечных</p>
+            <p>Пока нет спортсменов</p>
           </div>
         )}
       </div>

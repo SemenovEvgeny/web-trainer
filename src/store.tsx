@@ -23,7 +23,7 @@ const AppContext = createContext<AppState | undefined>(undefined);
 export function AppProvider({ children }: { children: ReactNode }) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   
-  // Все доступные подопечные в системе
+  // Все доступные спортсмены в системе
   const [allAvailableTrainees] = useState<Trainee[]>([
     {
       id: '1',
@@ -63,7 +63,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     },
   ]);
 
-  // Подопечные, добавленные к текущему тренеру
+  // Спортсмены, добавленные к текущему тренеру
   const [trainees, setTrainees] = useState<Trainee[]>([
     {
       id: '1',
@@ -248,7 +248,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         setTrainees([...trainees, { ...trainee, tasksCount: 0 }]);
       } else if (trainerId) {
         // Если trainerId указан, но текущий пользователь не тренер, все равно добавляем
-        // (для случая, когда подопечный сканирует QR код)
+        // (для случая, когда спортсмен сканирует QR код)
         setTrainees([...trainees, { ...trainee, tasksCount: 0 }]);
       }
     }
@@ -256,7 +256,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const removeTrainee = (traineeId: string) => {
     setTrainees(trainees.filter(t => t.id !== traineeId));
-    // Также удаляем все задания этого подопечного
+    // Также удаляем все задания этого спортсмена
     setTasks(tasks.filter(t => t.traineeId !== traineeId));
   };
 

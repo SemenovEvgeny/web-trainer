@@ -10,7 +10,7 @@ export default function AddTrainee({ onClose }: AddTraineeProps) {
   const { allAvailableTrainees, trainees, addTrainee } = useApp();
   const [selectedTraineeId, setSelectedTraineeId] = useState('');
 
-  // Проверяем, добавлен ли подопечный
+  // Проверяем, добавлен ли спортсмен
   const isTraineeAdded = (traineeId: string) => {
     return trainees.some(added => added.id === traineeId);
   };
@@ -28,7 +28,7 @@ export default function AddTrainee({ onClose }: AddTraineeProps) {
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
             <UserPlus className="w-6 h-6 text-indigo-600" />
-            Добавить подопечного
+            Добавить спортсмена
           </h2>
           <button
             onClick={onClose}
@@ -41,7 +41,7 @@ export default function AddTrainee({ onClose }: AddTraineeProps) {
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Выберите подопечного
+              Выберите спортсмена
             </label>
             <select
               value={selectedTraineeId}

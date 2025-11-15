@@ -195,7 +195,7 @@ export default function TrainersList() {
                 {trainer.traineesCount !== undefined && (
                   <div className="flex items-center gap-1">
                     <Users className="w-4 h-4" />
-                    <span>{trainer.traineesCount} подопечных</span>
+                    <span>{trainer.traineesCount} спортсменов</span>
                   </div>
                 )}
                 {trainer.experience && (

@@ -11,7 +11,7 @@ export default function TraineeQRCode({ onClose }: TraineeQRCodeProps) {
   const { currentUser, allAvailableTrainees } = useApp();
   const [selectedTraineeId, setSelectedTraineeId] = useState('');
 
-  // Генерируем URL для добавления подопечного
+  // Генерируем URL для добавления спортсмена
   const getQRUrl = (traineeId: string) => {
     const baseUrl = window.location.origin;
     return `${baseUrl}/join?trainer=${currentUser?.id}&trainee=${traineeId}`;
@@ -65,7 +65,7 @@ export default function TraineeQRCode({ onClose }: TraineeQRCodeProps) {
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Выберите подопечного
+              Выберите спортсмена
             </label>
             <select
               value={selectedTraineeId}
@@ -94,7 +94,7 @@ export default function TraineeQRCode({ onClose }: TraineeQRCodeProps) {
               </div>
               <div className="text-center">
                 <p className="text-sm text-gray-600 mb-2">
-                  Подопечный: <span className="font-semibold">{selectedTrainee?.name}</span>
+                  Спортсмен: <span className="font-semibold">{selectedTrainee?.name}</span>
                 </p>
                 <p className="text-xs text-gray-500 break-all">{qrUrl}</p>
               </div>

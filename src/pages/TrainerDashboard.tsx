@@ -34,7 +34,7 @@ export default function TrainerDashboard() {
                 }`}
               >
                 <Users className="w-5 h-5 mr-2" />
-                Подопечные
+                Спортсмены
               </Link>
               <Link
                 to="/trainer/tasks"

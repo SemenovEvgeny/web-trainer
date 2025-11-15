@@ -55,7 +55,7 @@ export default function TraineesList() {
   };
 
   const handleDeleteClick = (traineeId: string, traineeName: string) => {
-    if (window.confirm(`Вы уверены, что хотите удалить подопечного "${traineeName}"?\n\nЭто действие также удалит все задания этого подопечного.`)) {
+    if (window.confirm(`Вы уверены, что хотите удалить спортсмена "${traineeName}"?\n\nЭто действие также удалит все задания этого спортсмена.`)) {
       removeTrainee(traineeId);
     }
   };
@@ -64,8 +64,8 @@ export default function TraineesList() {
     <div>
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Мои подопечные</h1>
-          <p className="text-gray-600">Управление подопечными и их заданиями</p>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Мои спортсмены</h1>
+        <p className="text-gray-600">Управление спортсменами и их заданиями</p>
         </div>
         <div className="flex gap-3">
           <button
@@ -80,7 +80,7 @@ export default function TraineesList() {
             className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors shadow-lg"
           >
             <Plus className="w-5 h-5" />
-            Добавить подопечного
+            Добавить спортсмена
           </button>
         </div>
       </div>
@@ -96,7 +96,7 @@ export default function TraineesList() {
               <button
                 onClick={() => handleDeleteClick(trainee.id, trainee.name)}
                 className="absolute top-4 right-4 text-gray-400 hover:text-red-600 transition-colors p-1"
-                title="Удалить подопечного"
+                title="Удалить спортсмена"
               >
                 <Trash2 className="w-5 h-5" />
               </button>
@@ -153,13 +153,13 @@ export default function TraineesList() {
       {trainees.length === 0 && (
         <div className="text-center py-12 bg-white rounded-lg">
           <User className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <p className="text-gray-600 mb-4">Пока нет подопечных</p>
+          <p className="text-gray-600 mb-4">Пока нет спортсменов</p>
           <button
             onClick={() => setShowAddModal(true)}
             className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
           >
             <Plus className="w-5 h-5" />
-            Добавить первого подопечного
+            Добавить первого спортсмена
           </button>
         </div>
       )}

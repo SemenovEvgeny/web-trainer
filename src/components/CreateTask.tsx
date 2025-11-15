@@ -36,13 +36,13 @@ export default function CreateTask() {
     <div className="max-w-3xl mx-auto">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Создать задание</h1>
-        <p className="text-gray-600">Создайте новое задание для подопечного</p>
+        <p className="text-gray-600">Создайте новое задание для спортсмена</p>
       </div>
 
       <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6 space-y-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Подопечный <span className="text-red-500">*</span>
+            Спортсмен <span className="text-red-500">*</span>
           </label>
           <select
             value={selectedTrainee}
@@ -50,7 +50,7 @@ export default function CreateTask() {
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none"
             required
           >
-            <option value="">Выберите подопечного</option>
+            <option value="">Выберите спортсмена</option>
             {trainees.map((trainee) => (
               <option key={trainee.id} value={trainee.id}>
                 {trainee.name}

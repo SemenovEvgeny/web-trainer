@@ -1,0 +1,21 @@
+# Конфигурационный файл для автоматического деплоя
+# Скопируйте этот файл в .deploy-config и заполните своими данными
+# НЕ коммитьте .deploy-config в Git! Он уже добавлен в .gitignore
+
+# FTP настройки для reg.ru
+FTP_SERVER=ftp.your-domain.ru
+FTP_USER=your-ftp-username
+FTP_PASS=your-ftp-password
+FTP_PATH=/public_html
+
+# SSH настройки (альтернатива FTP)
+SSH_HOST=ssh.your-domain.ru
+SSH_USER=your-ssh-username
+SSH_PATH=/home/username/public_html
+
+# Домен приложения
+DOMAIN=https://your-domain.ru
+
+# Окружение
+ENVIRONMENT=production
+

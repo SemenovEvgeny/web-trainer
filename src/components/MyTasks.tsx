@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useApp } from '../store';
 import { FileText, Clock, CheckCircle, AlertCircle, Star } from 'lucide-react';
-import { TaskStatus, QualityRating } from '../types';
+import { QualityRating } from '../types';
 
 const statusIcons = {
   pending: Clock,

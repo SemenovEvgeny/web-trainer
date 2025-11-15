@@ -127,9 +127,9 @@ export default function TraineesList() {
                   <span className="text-gray-600">Средняя оценка:</span>
                   {stats.averageRating ? (
                     <span
-                      className={`px-2 py-1 rounded text-xs font-semibold ${ratingColors[stats.averageRating]}`}
+                      className={`px-2 py-1 rounded text-xs font-semibold ${ratingColors[stats.averageRating as QualityRating]}`}
                     >
-                      {ratingLabels[stats.averageRating]}
+                      {ratingLabels[stats.averageRating as QualityRating]}
                     </span>
                   ) : (
                     <span className="px-2 py-1 rounded text-xs font-semibold bg-gray-100 text-gray-600">

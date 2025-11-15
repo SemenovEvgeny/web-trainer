@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
-import { User, Task, Trainee, QualityRating, Trainer, TrainerCategory, TrainerReview } from './types';
+import { User, Task, Trainee, QualityRating, Trainer, TrainerReview } from './types';
 
 interface AppState {
   currentUser: User | null;
@@ -277,16 +277,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
     setTrainerReviews([...trainerReviews, newReview]);
 
-    // Обновляем средний рейтинг тренера
-    const trainerReviewsForTrainer = [...trainerReviews, newReview].filter(
-      r => r.trainerId === trainerId
-    );
-    const averageRating =
-      trainerReviewsForTrainer.reduce((sum, r) => sum + r.rating, 0) /
-      trainerReviewsForTrainer.length;
-
     // Обновляем рейтинг в списке тренеров
     // В реальном приложении это должно быть через API
+    // Средний рейтинг будет пересчитан автоматически при следующем рендере
   };
 
   const createTask = (taskData: Omit<Task, 'id' | 'createdAt'>) => {

@@ -1,5 +1,5 @@
 import { useApp } from '../store';
-import { User, Mail, Users, FileText, CheckCircle, Clock, Award, TrendingUp } from 'lucide-react';
+import { User, Mail, Users, FileText, CheckCircle, Clock, Award } from 'lucide-react';
 import { QualityRating } from '../types';
 
 const ratingColors: Record<QualityRating, string> = {
@@ -42,7 +42,6 @@ export default function TrainerProfile() {
         const excellentCount = ratingDistribution.excellent || 0;
         const goodCount = ratingDistribution.good || 0;
         const satisfactoryCount = ratingDistribution.satisfactory || 0;
-        const needsImprovementCount = ratingDistribution.needs_improvement || 0;
         const total = reviewedTasksWithRating.length;
 
         if (excellentCount / total > 0.5) return 'excellent';

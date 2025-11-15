@@ -92,9 +92,10 @@ npm run build
 
 ### Варианты деплоя:
 
-1. **[reg.ru через GitHub](./DEPLOY_REG_RU.md)** - подробная инструкция для российского хостинга
-2. **[Другие платформы](./DEPLOY.md)** - Vercel, Netlify, GitHub Pages, свой сервер
-3. **[Быстрый старт](./QUICK_START.md)** - краткая инструкция для Vercel
+1. **[GitHub Actions](./.github/workflows/README.md)** - автоматический деплой через CI/CD ⚡
+2. **[reg.ru через GitHub](./DEPLOY_REG_RU.md)** - подробная инструкция для российского хостинга
+3. **[Другие платформы](./DEPLOY.md)** - Vercel, Netlify, GitHub Pages, свой сервер
+4. **[Скрипты деплоя](./DEPLOY_SCRIPTS.md)** - локальные скрипты для деплоя
 
 ### Быстрый старт с reg.ru:
 
@@ -120,7 +121,21 @@ npm run deploy
 ```
 
 **Подробные инструкции:**
-- [Скрипты деплоя](./DEPLOY_SCRIPTS.md) - автоматизация деплоя
+- [GitHub Actions](./.github/workflows/README.md) - автоматический деплой при каждом push
+- [Скрипты деплоя](./DEPLOY_SCRIPTS.md) - локальные скрипты для деплоя
 - [Деплой на reg.ru](./DEPLOY_REG_RU.md) - подробная инструкция
 - [Другие платформы](./DEPLOY.md) - Vercel, Netlify и др.
+
+### GitHub Actions (Автоматический деплой):
+
+Настроены workflows для автоматического деплоя:
+- ✅ **CI** - проверка и сборка при каждом PR
+- ✅ **Deploy to reg.ru** - автоматический деплой на reg.ru при push в main
+- ✅ **Deploy to Vercel** - автоматический деплой на Vercel
+- ✅ **Deploy to Netlify** - автоматический деплой на Netlify
+
+**Настройка:**
+1. Перейдите в Settings → Secrets and variables → Actions
+2. Добавьте необходимые секреты (см. [.github/workflows/README.md](./.github/workflows/README.md))
+3. При следующем push в `main` произойдет автоматический деплой!
 

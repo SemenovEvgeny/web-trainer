@@ -52,23 +52,6 @@ DOMAIN=https://your-domain.ru
 - Загружает на reg.ru через FTP
 - Загружает `.htaccess`
 
-### 3. Deploy to Vercel
-**Файл:** `.github/workflows/deploy-vercel.yml`
-
-**Требуемые секреты:**
-- `VERCEL_TOKEN`
-- `VERCEL_ORG_ID`
-- `VERCEL_PROJECT_ID`
-
-### 4. Deploy to Netlify
-**Файл:** `.github/workflows/deploy-netlify.yml`
-
-**Требуемые секреты:**
-- `NETLIFY_AUTH_TOKEN`
-- `NETLIFY_SITE_ID`
-
----
-
 ## Как получить данные для секретов
 
 ### FTP данные (reg.ru):
@@ -79,18 +62,6 @@ DOMAIN=https://your-domain.ru
    - FTP сервер
    - FTP логин
    - FTP пароль
-
-### Vercel данные:
-
-1. Войдите в [Vercel](https://vercel.com)
-2. **Settings** → **Tokens** → **Create Token**
-3. Для получения ID: выполните `vercel link` локально
-
-### Netlify данные:
-
-1. Войдите в [Netlify](https://netlify.com)
-2. **User settings** → **Applications** → **New access token**
-3. Site ID в настройках сайта
 
 ---
 

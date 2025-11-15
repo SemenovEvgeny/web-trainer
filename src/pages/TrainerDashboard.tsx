@@ -1,6 +1,6 @@
 import { Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useApp } from '../store';
-import { LogOut, Users, FileText, Plus, User, Calendar } from 'lucide-react';
+import { LogOut, Users, FileText, Plus, Calendar } from 'lucide-react';
 import TraineesList from '../components/TraineesList';
 import TasksList from '../components/TasksList';
 import CreateTask from '../components/CreateTask';
@@ -70,20 +70,14 @@ export default function TrainerDashboard() {
                 <Plus className="w-5 h-5 mr-2" />
                 Создать тренировку
               </Link>
-              <Link
-                to="/trainer/profile"
-                className={`flex items-center px-4 border-b-2 ${
-                  isActive('/trainer/profile')
-                    ? 'border-indigo-500 text-indigo-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
-              >
-                <User className="w-5 h-5 mr-2" />
-                Профиль
-              </Link>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-gray-700 font-medium">{currentUser?.name}</span>
+              <Link
+                to="/trainer/profile"
+                className="text-gray-700 font-medium hover:text-indigo-600 transition-colors cursor-pointer"
+              >
+                {currentUser?.name}
+              </Link>
               <button
                 onClick={handleLogout}
                 className="flex items-center text-gray-500 hover:text-gray-700"

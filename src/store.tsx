@@ -240,6 +240,28 @@ export function AppProvider({ children }: { children: ReactNode }) {
         distance: 1000,
       },
     },
+    {
+      id: '3',
+      title: 'Легкая пробежка',
+      description: 'Пробежка в легком темпе. Задача — поддерживать ровное дыхание.',
+      trainerId: 'trainer-1',
+      traineeId: '1',
+      status: 'in_progress',
+      sportType: 'athletics',
+      createdAt: new Date().toISOString(),
+      dueDate: new Date().toISOString().slice(0, 10),
+    },
+    {
+      id: '4',
+      title: 'Футбольная тренировка: техника',
+      description: 'Разминка, отработка ведения мяча и короткие спринты.',
+      trainerId: 'trainer-1',
+      traineeId: '1',
+      status: 'pending',
+      sportType: 'football',
+      createdAt: new Date().toISOString(),
+      dueDate: new Date().toISOString().slice(0, 10),
+    },
   ]);
 
   const addTrainee = (traineeId: string, trainerId?: string) => {

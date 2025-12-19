@@ -45,49 +45,6 @@
 
 ---
 
-### 3. `deploy-vercel.yml` - Деплой на Vercel
-
-**Триггеры:**
-- Push в ветку `main`
-- Ручной запуск через GitHub UI
-
-**Что делает:**
-- ✅ Собирает проект
-- ✅ Деплоит на Vercel
-
-**Требуемые секреты:**
-- `VERCEL_TOKEN` - Personal Access Token от Vercel
-- `VERCEL_ORG_ID` - Organization ID
-- `VERCEL_PROJECT_ID` - Project ID
-
-**Как получить:**
-1. Войдите в [Vercel](https://vercel.com)
-2. Settings → Tokens → Create Token
-3. Для получения ID: `vercel link` в локальном проекте
-
----
-
-### 4. `deploy-netlify.yml` - Деплой на Netlify
-
-**Триггеры:**
-- Push в ветку `main`
-- Ручной запуск через GitHub UI
-
-**Что делает:**
-- ✅ Собирает проект
-- ✅ Деплоит на Netlify
-
-**Требуемые секреты:**
-- `NETLIFY_AUTH_TOKEN` - Personal Access Token от Netlify
-- `NETLIFY_SITE_ID` - Site ID
-
-**Как получить:**
-1. Войдите в [Netlify](https://netlify.com)
-2. User settings → Applications → New access token
-3. Site ID можно найти в настройках сайта
-
----
-
 ## Настройка секретов
 
 ### Для reg.ru деплоя:
@@ -104,23 +61,6 @@ FTP_PASSWORD=your-ftp-password
 FTP_PATH=/public_html
 DOMAIN=https://your-domain.ru
 ```
-
-### Для Vercel:
-
-```
-VERCEL_TOKEN=your-vercel-token
-VERCEL_ORG_ID=your-org-id
-VERCEL_PROJECT_ID=your-project-id
-```
-
-### Для Netlify:
-
-```
-NETLIFY_AUTH_TOKEN=your-netlify-token
-NETLIFY_SITE_ID=your-site-id
-```
-
----
 
 ## Ручной запуск workflow
 

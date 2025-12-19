@@ -1,5 +1,5 @@
 import { createContext, useState, ReactNode } from 'react';
-import { User, Task, Trainee, QualityRating, Trainer, TrainerReview } from './types';
+import { User, Task, Trainee, QualityRating, Trainer, TrainerReview, RegisteredUser } from './types';
 
 interface AppState {
   currentUser: User | null;
@@ -8,7 +8,10 @@ interface AppState {
   trainers: Trainer[];
   trainerReviews: TrainerReview[];
   tasks: Task[];
+  registeredUsers: RegisteredUser[];
   setCurrentUser: (user: User | null) => void;
+  register: (login: string, password: string, name: string, email: string, role: 'trainer' | 'trainee') => { success: boolean; message: string };
+  login: (login: string, password: string) => { success: boolean; message: string; user?: User };
   addTrainee: (traineeId: string, trainerId?: string) => void;
   removeTrainee: (traineeId: string) => void;
   addTrainerReview: (trainerId: string, rating: number, comment: string) => void;
@@ -22,6 +25,83 @@ export const AppContext = createContext<AppState | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  
+  // Зарегистрированные пользователи (в реальном приложении это было бы в базе данных)
+  const [registeredUsers, setRegisteredUsers] = useState<RegisteredUser[]>([
+    // Примеры пользователей для тестирования
+    {
+      id: 'demo-trainer',
+      login: 'trainer',
+      password: '123456',
+      name: 'Демо Тренер',
+      email: 'trainer@example.com',
+      role: 'trainer',
+    },
+    {
+      id: 'demo-trainee',
+      login: 'athlete',
+      password: '123456',
+      name: 'Демо Спортсмен',
+      email: 'athlete@example.com',
+      role: 'trainee',
+    },
+  ]);
+  
+  // Функция регистрации
+  const register = (login: string, password: string, name: string, email: string, role: 'trainer' | 'trainee') => {
+    // Проверка на существующий логин
+    if (registeredUsers.find(u => u.login === login)) {
+      return { success: false, message: 'Пользователь с таким логином уже существует' };
+    }
+    
+    // Проверка на существующий email
+    if (registeredUsers.find(u => u.email === email)) {
+      return { success: false, message: 'Пользователь с таким email уже существует' };
+    }
+    
+    // Валидация
+    if (!login.trim() || !password.trim() || !name.trim() || !email.trim()) {
+      return { success: false, message: 'Все поля обязательны для заполнения' };
+    }
+    
+    if (password.length < 6) {
+      return { success: false, message: 'Пароль должен содержать минимум 6 символов' };
+    }
+    
+    // Создание нового пользователя
+    const newUser: RegisteredUser = {
+      id: `user-${Date.now()}`,
+      login,
+      password, // В реальном приложении пароль должен быть захеширован
+      name,
+      email,
+      role,
+    };
+    
+    setRegisteredUsers([...registeredUsers, newUser]);
+    return { success: true, message: 'Регистрация успешна!' };
+  };
+  
+  // Функция входа
+  const login = (login: string, password: string) => {
+    const user = registeredUsers.find(u => u.login === login && u.password === password);
+    
+    if (!user) {
+      return { success: false, message: 'Неверный логин или пароль' };
+    }
+    
+    // Преобразуем RegisteredUser в User
+    const userForApp: User = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      avatar: user.avatar,
+    };
+    
+    setCurrentUser(userForApp);
+    return { success: true, message: 'Вход выполнен успешно', user: userForApp };
+  };
   
   // Все доступные спортсмены в системе
   const [allAvailableTrainees] = useState<Trainee[]>([
@@ -355,7 +435,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
         trainers,
         trainerReviews,
         tasks,
+        registeredUsers,
         setCurrentUser,
+        register,
+        login,
         addTrainee,
         removeTrainee,
         addTrainerReview,

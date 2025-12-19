@@ -88,3 +88,13 @@ export interface TrainerReview {
   createdAt: string;
 }
 
+export interface RegisteredUser {
+  id: string;
+  login: string;
+  password: string;
+  name: string;
+  email: string;
+  role: UserRole;
+  avatar?: string;
+}
+
